@@ -65,3 +65,207 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # QuizApi
+
+# Quiz API
+
+A Laravel-based Quiz API to manage quizzes, questions, and answers, as well as allow users to take quizzes and view their results.
+
+---
+
+## **Features**
+- User registration and login with JWT authentication.
+- CRUD operations for quizzes, questions, and answers.
+- Submit quiz answers and calculate scores.
+- View quiz results for users.
+
+---
+
+## **Requirements**
+- PHP >= 8.1
+- Composer
+- MySQL >= 5.7
+- Laravel >= 9.x
+- Postman or cURL (for API testing)
+
+---
+
+## **Installation**
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/yourusername/quiz-api.git
+cd quiz-api
+Configure Environment
+
+    Copy the .env.example file to .env
+    Update the following environment variables in the .env file
+
+Set Up Database
+APP_NAME=QuizAPI
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=quiz_api
+DB_USERNAME=root
+DB_PASSWORD=yourpassword
+Run Migrations
+    php artisan migrate
+
+Usage
+1. Run the Application
+
+Start the Laravel development server:
+
+php artisan serve
+
+The API will be available at: http://localhost:8000
+2. API Endpoints
+Authentication
+
+    Register
+
+POST /register
+
+Request Body:
+
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+}
+
+Response:
+
+{
+    "token": "your-jwt-token",
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+}
+
+Login
+
+POST /login
+
+Request Body:
+
+{
+    "email": "john.doe@example.com",
+    "password": "password123"
+}
+
+Response:
+
+    {
+        "token": "your-jwt-token"
+    }
+
+Use the token from the response in the Authorization header for all subsequent requests:
+
+Authorization: Bearer <your-jwt-token>
+
+Quizzes
+
+    Create a Quiz
+
+POST /quizzes
+
+Request Body:
+
+{
+    "title": "General Knowledge Quiz"
+}
+
+Fetch All Quizzes
+
+GET /quizzes
+
+Fetch a Single Quiz
+
+GET /quizzes/{quizId}
+
+Update a Quiz
+
+PUT /quizzes/{quizId}
+
+Request Body:
+
+{
+    "title": "Updated Quiz Title"
+}
+
+Delete a Quiz
+
+    DELETE /quizzes/{quizId}
+
+Questions
+
+    Add a Question to a Quiz
+
+POST /quizzes/{quizId}/questions
+
+Request Body:
+
+{
+    "question_text": "What is the capital of France?",
+    "answers": [
+        { "answer_text": "Paris", "is_correct": true },
+        { "answer_text": "London", "is_correct": false },
+        { "answer_text": "Berlin", "is_correct": false },
+        { "answer_text": "Madrid", "is_correct": false }
+    ]
+}
+
+Update a Question
+
+PUT /questions/{questionId}
+
+Request Body:
+
+{
+    "question_text": "What is the largest planet?",
+    "answers": [
+        { "answer_text": "Jupiter", "is_correct": true },
+        { "answer_text": "Earth", "is_correct": false }
+    ]
+}
+
+Delete a Question
+
+    DELETE /questions/{questionId}
+
+Attempting a Quiz
+
+    Submit Quiz Answers
+
+POST /quizzes/{quizId}/results
+
+Request Body:
+
+{
+    "answers": [
+        { "question_id": 1, "answer_id": 1 },
+        { "question_id": 2, "answer_id": 5 }
+    ]
+}
+
+Response:
+
+{
+    "error": false,
+    "result": {
+        "id": 1,
+        "user_id": 1,
+        "quiz_id": 1,
+        "score": 2
+    }
+}
+
+View User's Results
+
+GET /results
