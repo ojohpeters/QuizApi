@@ -95,7 +95,9 @@ A Laravel-based Quiz API to manage quizzes, questions, and answers, as well as a
 ```bash
 git clone https://github.com/yourusername/quiz-api.git
 cd quiz-api
+```
 Configure Environment
+
 
     Copy the .env.example file to .env
     Update the following environment variables in the .env file
